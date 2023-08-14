@@ -10,8 +10,8 @@ import java.sql.SQLException;
 public class DatabaseConnection {
 
     private static final String URL = "jdbc:postgresql://localhost:5432/cinema";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "harizo123";
+    private static final String USER = System.getenv("USER");
+    private static final String PASSWORD = System.getenv("PASSWORD") ;
 
     public static Connection getConnection() {
         System.out.println("Connection à la base");
