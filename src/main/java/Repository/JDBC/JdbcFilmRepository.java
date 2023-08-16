@@ -13,15 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class JdbcFilmRepository  implements FilmRepository {
+public abstract class JdbcFilmRepository  implements FilmRepository {
 
     public  final DataSource dataSource;
 
     public  JdbcFilmRepository (DataSource dataSource){
         this.dataSource= dataSource;
     }
+
+
     @Override
-    public Film finById(Long id) {
+    public Film findById(Long id) {
         String query = "SELECT * FROM films WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -36,6 +38,7 @@ public class JdbcFilmRepository  implements FilmRepository {
         }
         return null;
     }
+
 
     private Film mapResultSetToFilm(ResultSet resultSet) throws SQLException {
         Long id = resultSet.getLong("id");
@@ -64,7 +67,7 @@ public class JdbcFilmRepository  implements FilmRepository {
     }
 
     @Override
-    public void save(Film film) {
+    public Film save(Film film) {
         String query = "INSERT INTO films (titre, realisateur, duree_minutes) VALUES (?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -75,6 +78,7 @@ public class JdbcFilmRepository  implements FilmRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return film;
     }
 
     @Override
@@ -93,7 +97,7 @@ public class JdbcFilmRepository  implements FilmRepository {
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
         String query = "DELETE FROM films WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -102,5 +106,6 @@ public class JdbcFilmRepository  implements FilmRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 }

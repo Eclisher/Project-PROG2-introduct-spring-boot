@@ -7,8 +7,8 @@ import java.util.List;
 public interface ProjectionRepository {
     List <Projection> findALl();
     Projection findById(Long id);
-    void save (Projection projection);
+    Projection save (Projection projection);
     void update (Projection projection);
-    void delete(Long id);
+    boolean delete(Long id);
 
 }

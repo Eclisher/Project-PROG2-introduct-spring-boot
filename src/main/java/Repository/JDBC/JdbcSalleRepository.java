@@ -20,8 +20,9 @@ public class JdbcSalleRepository implements SalleRepository {
     }
 
     @Override
-    public void save(Salle salle) {
+    public Salle save(Salle salle) {
 
+        return salle;
     }
 
     @Override
@@ -30,7 +31,8 @@ public class JdbcSalleRepository implements SalleRepository {
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
 
+        return false;
     }
 }

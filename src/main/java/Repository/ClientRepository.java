@@ -9,9 +9,9 @@ public interface ClientRepository {
 
     Client findById(Long id);
 
-    void save(Client client);
+    Client save(Client client);
 
     void update(Client client);
 
-    void delete(Long id);
+    boolean delete(Long id);
 }

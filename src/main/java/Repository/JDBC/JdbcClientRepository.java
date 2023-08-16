@@ -65,7 +65,7 @@ public class JdbcClientRepository implements ClientRepository {
     }
 
     @Override
-    public void save(Client client) {
+    public Client save(Client client) {
         String sql = "INSERT INTO clients (nom, prenom) VALUES (?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -76,6 +76,7 @@ public class JdbcClientRepository implements ClientRepository {
         } catch (SQLException e) {
             // Handle exception
         }
+        return client;
     }
 
     @Override
@@ -94,7 +95,7 @@ public class JdbcClientRepository implements ClientRepository {
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
         String sql = "DELETE FROM clients WHERE id = ?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -104,5 +105,6 @@ public class JdbcClientRepository implements ClientRepository {
         } catch (SQLException e) {
             // Handle exception
         }
+        return false;
     }
 }

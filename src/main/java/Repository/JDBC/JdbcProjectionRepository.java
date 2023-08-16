@@ -77,7 +77,7 @@ public class JdbcProjectionRepository implements ProjectionRepository {
     }
 
     @Override
-    public void save(Projection projection) {
+    public Projection save(Projection projection) {
         String query = "INSERT INTO projections (salle_id, film_id, date_heure) VALUES (?, ?, ?)";
 
         try (Connection connection = dataSource.getConnection();
@@ -102,6 +102,7 @@ public class JdbcProjectionRepository implements ProjectionRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return projection;
     }
 
     @Override
@@ -126,7 +127,7 @@ public class JdbcProjectionRepository implements ProjectionRepository {
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
         String query = "DELETE FROM projections WHERE id = ?";
 
         try (Connection connection = dataSource.getConnection();
@@ -141,5 +142,6 @@ public class JdbcProjectionRepository implements ProjectionRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 }

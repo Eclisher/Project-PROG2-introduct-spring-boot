@@ -6,8 +6,11 @@ import java.util.List;
 
 public interface FilmRepository {
     Film finById(Long id);
+
+    Film findById(Long id);
+
     List<Film> findAll();
-    void save(Film film);
+    Film save(Film film);
     void update(Film film);
-    void delete (Long id);
+    boolean delete (Long id);
 }
