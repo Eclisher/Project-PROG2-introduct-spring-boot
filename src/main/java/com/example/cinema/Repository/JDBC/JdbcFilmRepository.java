@@ -12,12 +12,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
- @Repository
+@Repository
 public class JdbcFilmRepository implements FilmRepository {
-    public  final DataSource dataSource;
+    public final DataSource dataSource;
 
-    public  JdbcFilmRepository (DataSource dataSource){
-        this.dataSource= dataSource;
+    public JdbcFilmRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     private Film mapResultSetToFilm(ResultSet resultSet) throws SQLException {
@@ -25,9 +25,9 @@ public class JdbcFilmRepository implements FilmRepository {
         String titre = resultSet.getString("titre");
         String realisateur = resultSet.getString("realisateur");
         int duree = resultSet.getInt("duree");
-        String genre= resultSet.getString("genre");
-        int anneeSortie=resultSet.getInt("annee_sortie");
-        return new Film(id, titre, realisateur, duree,genre,anneeSortie);
+        String genre = resultSet.getString("genre");
+        int anneeSortie = resultSet.getInt("annee_sortie");
+        return new Film(id, titre, realisateur, duree, genre, anneeSortie);
     }
 
     @Override

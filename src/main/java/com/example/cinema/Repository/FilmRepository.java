@@ -4,6 +4,7 @@ import com.example.cinema.Model.Film;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 @Repository
 public interface FilmRepository {
     Film finById(Long id);
@@ -11,7 +12,10 @@ public interface FilmRepository {
     Film findById(Long id);
 
     List<Film> findAll();
+
     Film save(Film film);
+
     void update(Film film);
-    boolean delete (Long id);
+
+    boolean delete(Long id);
 }

@@ -19,11 +19,11 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
-public class JdbcSalleRepository  implements SalleRepository {
+public class JdbcSalleRepository implements SalleRepository {
     private SalleRepository salleRepository;
     private FilmRepository filmRepository;
-    private ProjectionRepository  projectionRepository;
-    public  final DataSource dataSource;
+    private ProjectionRepository projectionRepository;
+    public final DataSource dataSource;
 
     public JdbcSalleRepository(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -33,8 +33,7 @@ public class JdbcSalleRepository  implements SalleRepository {
         int id = resultSet.getInt("id");
         String nom = resultSet.getString("nom");
         int capacite = resultSet.getInt("capacite");
-        Long id_projection = resultSet.getLong("id_projection"); // Récupérer l'ID de la projection
-
+        Long id_projection = resultSet.getLong("id_projection");
         return new Salle(id, nom, capacite, Math.toIntExact(id_projection));
     }
 
@@ -45,10 +44,9 @@ public class JdbcSalleRepository  implements SalleRepository {
         Film film = filmRepository.finById(filmId);
         Salle salle = salleRepository.findById((long) salleId);
         LocalDateTime dateHeure = resultSet.getObject("date_heure", LocalDateTime.class);
-        return new Projection(id_projection, salle, film, dateHeure /* autres attributs */
-
-    );
+        return new Projection(id_projection, salle, film, dateHeure);
     }
+
     @Override
     public List<Salle> findAll() {
         List<Salle> salles = new ArrayList<>();

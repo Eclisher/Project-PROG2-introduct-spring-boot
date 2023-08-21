@@ -79,6 +79,34 @@ public class CinemaController {
             return ResponseEntity.notFound().build();
         }
     }
+    @PostMapping("/projections")
+    public ResponseEntity<Projection> createProjection(@RequestBody Projection projection) {
+        Projection createdProjection = cinemaService.createProjection(projection);
+        if (createdProjection != null) {
+            return new ResponseEntity<>(createdProjection, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PutMapping("/projections/{id}")
+    public ResponseEntity<Projection> updateProjection(@PathVariable Long id, @RequestBody Projection projection) {
+        Projection updatedProjection = cinemaService.updateProjection(id, projection);
+        if (updatedProjection != null) {
+            return ResponseEntity.ok(updatedProjection);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @DeleteMapping("/projections/{id}")
+    public ResponseEntity<Void> deleteProjection(@PathVariable Long id) {
+        boolean deleted = cinemaService.deleteProjection(id);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     // Methode de chercher un projection  à la date ...
     // en entrant par exemple http://localhost:8080/upcoming?dateTime=2022-10-10%2011:59:50

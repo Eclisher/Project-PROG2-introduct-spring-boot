@@ -23,6 +23,7 @@ public class CinemaService {
     private final SalleRepository salleRepository;
     private final ProjectionRepository projectionRepository;
     private final FilmRepository filmRepository;
+
     // Méthodes pour la gestion des clients
     public List<Client> getAllClients() {
         return clientRepository.findAll();
@@ -39,11 +40,12 @@ public class CinemaService {
     public Client updateClient(Long id, Client client) {
         Client existingClient = clientRepository.findById(id);
         if (existingClient != null) {
-            existingClient.setNom(client.getNom()); // Mettez à jour d'autres propriétés selon votre modèle
+            existingClient.setNom(client.getNom());
             return clientRepository.save(existingClient);
         }
         return null;
     }
+
     public boolean deleteClient(Long id) {
         return clientRepository.delete(id);
     }
@@ -64,7 +66,7 @@ public class CinemaService {
     public Salle updateSalle(Long id, Salle salle) {
         Salle existingSalle = salleRepository.findById(id);
         if (existingSalle != null) {
-            existingSalle.setNom(salle.getNom()); // Mettez à jour d'autres propriétés selon votre modèle
+            existingSalle.setNom(salle.getNom());
             return salleRepository.save(existingSalle);
         }
         return null;
@@ -78,8 +80,9 @@ public class CinemaService {
     public List<Projection> getAllProjections() {
         return projectionRepository.findALl();
     }
+
     public Projection getProjectionById(Long id) {
-        return  projectionRepository.findById(id);
+        return projectionRepository.findById(id);
     }
 
     public List<Projection> getProjectionsByDateTime(LocalDateTime dateTime) {
@@ -93,7 +96,7 @@ public class CinemaService {
     public Projection updateProjection(Long id, Projection projection) {
         Projection existingProjection = projectionRepository.findById(id);
         if (existingProjection != null) {
-            existingProjection.setDateHeure(projection.getDateHeure()); // Mettez à jour d'autres propriétés selon votre modèle
+            existingProjection.setDateHeure(projection.getDateHeure());
             return projectionRepository.save(existingProjection);
         }
         return null;
@@ -119,11 +122,12 @@ public class CinemaService {
     public Film updateFilm(Long id, Film film) {
         Film existingFilm = filmRepository.findById(id);
         if (existingFilm != null) {
-            existingFilm.setTitre(film.getTitre()); // Mettez à jour d'autres propriétés selon votre modèle
+            existingFilm.setTitre(film.getTitre());
             return filmRepository.save(existingFilm);
         }
         return null;
     }
+
     public boolean deleteFilm(Long id) {
         return filmRepository.delete(id);
     }

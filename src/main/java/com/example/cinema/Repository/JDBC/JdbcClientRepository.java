@@ -29,6 +29,7 @@ public class JdbcClientRepository implements ClientRepository {
         String email = resultSet.getString("email");
         return new Client(id, nom, prenom, email);
     }
+
     @Override
     public List<Client> findAll() {
         List<Client> clients = new ArrayList<>();
