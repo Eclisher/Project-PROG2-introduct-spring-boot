@@ -1,9 +1,6 @@
 package com.example.cinema.Controller;
 
-import com.example.cinema.Model.Client;
-import com.example.cinema.Model.Film;
-import com.example.cinema.Model.Projection;
-import com.example.cinema.Model.Salle;
+import com.example.cinema.Model.*;
 import com.example.cinema.Service.CinemaService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -209,12 +206,48 @@ public class CinemaController {
         return cinemaService.getProjectionsByDateTime(dateTime);
     }
 
+    //Methode de gestion du réservation
+
+
+    @PostMapping("/reservations")
+    public ResponseEntity<Reservation> createReservation(
+            @RequestBody Reservation reservation,
+            @RequestParam Long clientId,
+            @RequestParam Long projectionId) {
+        Reservation createdReservation = cinemaService.createReservation(reservation, clientId, projectionId);
+        if (createdReservation != null) {
+            return new ResponseEntity<>(createdReservation, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/reservations")
+    public List<Reservation> getAllReservations() {
+        return cinemaService.getAllReservations();
+    }
+
+    @DeleteMapping("/reservations/{id}")
+    public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
+        boolean deleted = cinemaService.deleteReservation(id);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     // Méthode de recherche de salles par capacité
     //http://localhost:8080/salles/search?capaciteMin=900
     // le chiffre 900 designe le nombre de capacité minimum de ce que vous chercher
     @GetMapping("/salles/search")
     public List<Salle> getSallesByCapacite(@RequestParam int capaciteMin) {
         return cinemaService.getSallesByCapacite(capaciteMin);
+    }
+
+    //Methode de trouver un reservations d'un client par un id
+    @GetMapping("/clients/{id}/reservations")
+    public List<Reservation> getReservationsByClientId(@PathVariable Long id) {
+        return cinemaService.getReservationsByClientId(id);
     }
 
 

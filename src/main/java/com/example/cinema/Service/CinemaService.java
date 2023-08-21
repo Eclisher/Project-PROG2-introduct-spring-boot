@@ -1,14 +1,8 @@
 package com.example.cinema.Service;
 
-import com.example.cinema.Model.Client;
-import com.example.cinema.Model.Film;
-import com.example.cinema.Model.Projection;
-import com.example.cinema.Model.Salle;
-import com.example.cinema.Repository.ClientRepository;
-import com.example.cinema.Repository.FilmRepository;
+import com.example.cinema.Model.*;
+import com.example.cinema.Repository.*;
 import com.example.cinema.Repository.JDBC.JdbcSalleRepository;
-import com.example.cinema.Repository.ProjectionRepository;
-import com.example.cinema.Repository.SalleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +17,7 @@ public class CinemaService {
     private final SalleRepository salleRepository;
     private final ProjectionRepository projectionRepository;
     private final FilmRepository filmRepository;
+    private final ReservationRepository reservationRepository;
 
     // Méthodes pour la gestion des clients
     public List<Client> getAllClients() {
@@ -131,9 +126,25 @@ public class CinemaService {
         }
         return null;
     }
-
     public boolean deleteFilm(Long id) {
         return filmRepository.delete(id);
+    }
+
+    //Methode de gestion de reservation
+
+    public Reservation createReservation(Reservation reservation, Long clientId, Long projectionId) {
+        return reservationRepository.save(reservation, clientId, projectionId);
+    }
+
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
+    }
+    public boolean deleteReservation(Long id) {
+        return reservationRepository.delete(id);
+    }
+
+    public List<Reservation> getReservationsByClientId(Long clientId) {
+        return reservationRepository.findByClientId(clientId);
     }
 
 

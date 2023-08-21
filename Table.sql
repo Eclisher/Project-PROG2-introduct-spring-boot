@@ -34,3 +34,11 @@ CREATE TABLE client
     prenom VARCHAR(100)        NOT NULL,
     email  VARCHAR(100) UNIQUE NOT NULL
 );
+
+--creation table reservation
+CREATE TABLE reservation (
+                             id SERIAL PRIMARY KEY,
+                             id_client INT REFERENCES client(id),
+                             id_projection INT REFERENCES projection(id),
+                             reservation_date TIMESTAMP
+);
