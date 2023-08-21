@@ -124,4 +124,23 @@ public class JdbcSalleRepository implements SalleRepository {
         }
         return false;
     }
+
+    @Override
+    public List<Salle> findByCapaciteGreaterThanEqual(int capaciteMin) {
+        List<Salle> salles = new ArrayList<>();
+        String query = "SELECT * FROM salle WHERE capacite >= ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, capaciteMin);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Salle salle = mapResultSetToSalle(resultSet);
+                    salles.add(salle);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return salles;
+    }
 }

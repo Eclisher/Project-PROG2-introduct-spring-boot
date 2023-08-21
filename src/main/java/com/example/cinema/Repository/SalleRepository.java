@@ -13,4 +13,5 @@ public interface SalleRepository {
     Salle save(Salle salle);
     void update(Salle salle);
     boolean delete (Long id);
+    List<Salle> findByCapaciteGreaterThanEqual(int capaciteMin);
 }

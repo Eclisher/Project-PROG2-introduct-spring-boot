@@ -76,6 +76,10 @@ public class CinemaService {
         return salleRepository.delete(id);
     }
 
+    public List<Salle> getSallesByCapacite(int capaciteMin) {
+        return salleRepository.findByCapaciteGreaterThanEqual(capaciteMin);
+    }
+
     //Methode de gestion des projections
     public List<Projection> getAllProjections() {
         return projectionRepository.findALl();
