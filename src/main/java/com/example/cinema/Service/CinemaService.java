@@ -6,11 +6,14 @@ import com.example.cinema.Model.Projection;
 import com.example.cinema.Model.Salle;
 import com.example.cinema.Repository.ClientRepository;
 import com.example.cinema.Repository.FilmRepository;
+import com.example.cinema.Repository.JDBC.JdbcSalleRepository;
 import com.example.cinema.Repository.ProjectionRepository;
 import com.example.cinema.Repository.SalleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,7 +23,6 @@ public class CinemaService {
     private final SalleRepository salleRepository;
     private final ProjectionRepository projectionRepository;
     private final FilmRepository filmRepository;
-
     // Méthodes pour la gestion des clients
     public List<Client> getAllClients() {
         return clientRepository.findAll();
@@ -80,6 +82,9 @@ public class CinemaService {
         return (List<Projection>) projectionRepository.findById(id);
     }
 
+    public List<Projection> getProjectionsByDateTime(LocalDateTime dateTime) {
+        return projectionRepository.findByDateTime(dateTime);
+    }
 
     public Projection createProjection(Projection projection) {
         return projectionRepository.save(projection);

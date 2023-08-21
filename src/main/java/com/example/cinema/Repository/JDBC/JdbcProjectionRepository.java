@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
 public class JdbcProjectionRepository  implements ProjectionRepository {
     private SalleRepository salleRepository;
     private FilmRepository filmRepository;
+
     private final DataSource dataSource;
 
     public JdbcProjectionRepository(SalleRepository salleRepository, FilmRepository filmRepository, DataSource dataSource) {
@@ -142,4 +144,28 @@ public class JdbcProjectionRepository  implements ProjectionRepository {
         }
         return false;
     }
+
+        @Override
+        public List<Projection> findByDateTime(LocalDateTime dateTime) {
+            List<Projection> projections = new ArrayList<>();
+            String sql = "SELECT * FROM projection WHERE date_heure = ?";
+            try (Connection connection = dataSource.getConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+                preparedStatement.setTimestamp(1, Timestamp.valueOf(dateTime));
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        Projection projection = mapResultSetToProjection(resultSet);
+                        projections.add(projection);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return projections;
+        }
+
+
 }

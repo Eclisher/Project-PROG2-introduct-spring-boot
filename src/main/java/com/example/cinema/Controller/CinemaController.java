@@ -5,22 +5,27 @@ import com.example.cinema.Model.Film;
 import com.example.cinema.Model.Projection;
 import com.example.cinema.Model.Salle;
 import com.example.cinema.Service.CinemaService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
 public class CinemaController {
     @GetMapping("")
-    public String Bienvenu(){
+    public String Bienvenu() {
         return "Votre Serveur est bien démmarrer";
     }
+
     @GetMapping("/ping")
-    public String pingPong(){
+    public String pingPong() {
         return "pong";
     }
+
     private final CinemaService cinemaService;
 
     public CinemaController(CinemaService cinemaService) {
@@ -38,7 +43,7 @@ public class CinemaController {
     public Client getClientById(@PathVariable Long id) {
         return cinemaService.getClientById(id);
     }
-    @RequestMapping(value = "/clients", method = RequestMethod.POST)
+
     @PostMapping("/clients") // Assurez-vous que le chemin correspond à votre requête POST
     public ResponseEntity<Client> createClient(@RequestBody Client client) {
         Client createdClient = cinemaService.createClient(client);
@@ -61,28 +66,38 @@ public class CinemaController {
 
     //Methode de gestion des projections
     @GetMapping("/projections")
-    public List<Projection> getAllProjection(){
-        return  cinemaService.getAllProjections();
+    public List<Projection> getAllProjection() {
+        return cinemaService.getAllProjections();
     }
 
     @GetMapping("/projections/{id}")
-    public Projection getProjectionById(@PathVariable Long id){
+    public Projection getProjectionById(@PathVariable Long id) {
         return (Projection) cinemaService.getProjectionById(id);
     }
 
+    // Methode de chercher un projection  à la date ...
+    // en entrant par exemple http://localhost:8080/upcoming?dateTime=2022-10-10%2011:59:50
+    @GetMapping("/upcoming")
+    public List<Projection> getUpcomingProjectionsByDateTime(
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime dateTime) {
+        return cinemaService.getProjectionsByDateTime(dateTime);
+    }
+
+
     //Methode de gestion des salles
     @GetMapping("/salles")
-    public List<Salle> getAllSalles(){
-        return  cinemaService.getAllSalles();
+    public List<Salle> getAllSalles() {
+        return cinemaService.getAllSalles();
     }
 
     //Methode de gestion des films
     @GetMapping("/films")
-    public List<Film> getAllFilms(){
+    public List<Film> getAllFilms() {
         return cinemaService.getAllFilms();
     }
+
     @GetMapping("/films/{id}")
-    public Film getFilmById(@PathVariable Long id){
+    public Film getFilmById(@PathVariable Long id) {
         return cinemaService.getFilmById(id);
     }
 }
