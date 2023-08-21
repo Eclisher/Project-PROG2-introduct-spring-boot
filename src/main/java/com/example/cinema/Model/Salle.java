@@ -14,5 +14,5 @@ public class Salle {
     private int id;
     private String nom;
     private int capacite;
-    private Projection projections;
+    private int projections;
 }

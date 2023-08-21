@@ -33,24 +33,9 @@ public class JdbcSalleRepository  implements SalleRepository {
         int id = resultSet.getInt("id");
         String nom = resultSet.getString("nom");
         int capacite = resultSet.getInt("capacite");
-        int id_projection = resultSet.getInt("id_projection");
+        Long id_projection = resultSet.getLong("id_projection"); // Récupérer l'ID de la projection
 
-        // Utiliser une jointure SQL pour récupérer la projection associée
-        String projectionQuery = "SELECT * FROM projection WHERE id = ?";
-        Projection projection = null;
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement projectionStatement = connection.prepareStatement(projectionQuery)) {
-            projectionStatement.setInt(1, id_projection);
-            try (ResultSet projectionResultSet = projectionStatement.executeQuery()) {
-                if (projectionResultSet.next()) {
-                    projection = mapResultSetToProjection(projectionResultSet);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return  new Salle(id,nom,capacite,projection);
+        return new Salle(id, nom, capacite, Math.toIntExact(id_projection));
     }
 
     private Projection mapResultSetToProjection(ResultSet resultSet) throws SQLException {
