@@ -250,6 +250,15 @@ public class CinemaController {
         return cinemaService.getReservationsByClientId(id);
     }
 
+    //Methode de recherche de reservation par la date spécifier
+    // http://localhost:8080/reservations/date?reservationDate=2023-03-07
+    @GetMapping("/reservations/date")
+    public List<Reservation> getReservationsByDate(
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate reservationDate) {
+        return cinemaService.getReservationsByDate(reservationDate);
+    }
+
+
 
 
 

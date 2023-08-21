@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class JdbcReservationRepository implements ReservationRepository {
         Long id = resultSet.getLong("id");
         Long clientId = resultSet.getLong("id_client");
         Long projectionId = resultSet.getLong("id_projection");
-        LocalDateTime reservationDate = resultSet.getObject("reservation_date", LocalDateTime.class);
+        LocalDateTime reservationDate = resultSet.getObject("reservation_date", LocalDate.class).atStartOfDay();
         Client client = clientRepository.findById(clientId);
         Projection projection = projectionRepository.findById(projectionId);
         return new Reservation(id,clientId,projectionId,reservationDate);
@@ -130,5 +131,24 @@ public class JdbcReservationRepository implements ReservationRepository {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public List<Reservation> findByDate(LocalDate reservationDate) {
+        List<Reservation> reservations = new ArrayList<>();
+        String query = "SELECT * FROM reservation WHERE reservation_date = ?";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setDate(1, Date.valueOf(reservationDate));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Reservation reservation = mapResultSetToReservation(resultSet);
+                    reservations.add(reservation);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reservations;
     }
 }

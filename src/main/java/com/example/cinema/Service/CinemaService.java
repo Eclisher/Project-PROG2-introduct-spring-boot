@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -146,6 +147,10 @@ public class CinemaService {
     public List<Reservation> getReservationsByClientId(Long clientId) {
         return reservationRepository.findByClientId(clientId);
     }
+    public List<Reservation> getReservationsByDate(LocalDate reservationDate) {
+        return reservationRepository.findByDate(reservationDate);
+    }
+
 
 
 }
