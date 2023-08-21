@@ -78,8 +78,8 @@ public class CinemaService {
     public List<Projection> getAllProjections() {
         return projectionRepository.findALl();
     }
-    public List<Projection> getProjectionById(Long id) {
-        return (List<Projection>) projectionRepository.findById(id);
+    public Projection getProjectionById(Long id) {
+        return  projectionRepository.findById(id);
     }
 
     public List<Projection> getProjectionsByDateTime(LocalDateTime dateTime) {
