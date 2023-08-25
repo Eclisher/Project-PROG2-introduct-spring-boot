@@ -28,7 +28,27 @@ The project follows a structure based on the MVC design pattern:
   - `repository/` : JDBC persistence layers.
   - `model/` : Java classes representing entities.
   - `CinemaApplication.java` : Main class for starting the application.
+## Step of manipulation
+###  A few steps to follow please:
+  - create the salle table as in the **Table.sql** script
+then insert all datamocks into **salle.sql**
+  - once all datamocks have been inserted **(projection, reservation)**
+  - delete the table *salle* with
+    ```sh
+    drop table salle cascade;
+    ```
+  - then create the room table with
+  - ```sh
+    CREATE TABLE salle
+	(
+			    id            SERIAL PRIMARY KEY,
+			    nom           VARCHAR(100) NOT NULL,
+			    id_projection int references projection (id),
+			    capacite      int   NOT NULL
+	);
+    ```
 
+ - and then insert the mock data into **salle1.sql**    
 ## Endpoints
 CRUD endpoints are defined in REST controllers. Here are a few examples:
 
