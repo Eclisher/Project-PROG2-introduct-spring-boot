@@ -1,12 +1,13 @@
--- Création de la table "salle"
-CREATE TABLE salle
+create  database cinema;
+\c cinema;
+-- Création de la table "client"
+CREATE TABLE client
 (
-    id            SERIAL PRIMARY KEY,
-    nom           VARCHAR(100) NOT NULL,
-    id_projection int references projection (id),
-    capacite      int   NOT NULL
+    id     SERIAL PRIMARY KEY,
+    nom    VARCHAR(100)        NOT NULL,
+    prenom VARCHAR(100)        NOT NULL,
+    email  VARCHAR(100) UNIQUE NOT NULL
 );
-
 -- Création de la table "film"
 CREATE TABLE film
 (
@@ -16,6 +17,13 @@ CREATE TABLE film
     duree        int,
     genre        VARCHAR(100),
     annee_sortie int          not null
+);
+-- Création de la table "salle"
+CREATE TABLE salle
+(
+    id            SERIAL PRIMARY KEY,
+    nom           VARCHAR(100) NOT NULL,
+    capacite      int   NOT NULL
 );
 
 -- Création de la table "projection"
@@ -27,14 +35,7 @@ CREATE TABLE projection
     date_heure timestamp NOT NULL
 );
 
--- Création de la table "client"
-CREATE TABLE client
-(
-    id     SERIAL PRIMARY KEY,
-    nom    VARCHAR(100)        NOT NULL,
-    prenom VARCHAR(100)        NOT NULL,
-    email  VARCHAR(100) UNIQUE NOT NULL
-);
+
 
 --creation table reservation
 CREATE TABLE reservation
