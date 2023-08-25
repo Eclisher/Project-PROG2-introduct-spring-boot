@@ -76,6 +76,7 @@ public class CinemaController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PostMapping("/projections")
     public ResponseEntity<Projection> createProjection(@RequestBody Projection projection) {
         Projection createdProjection = cinemaService.createProjection(projection);
@@ -85,6 +86,7 @@ public class CinemaController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PutMapping("/projections/{id}")
     public ResponseEntity<Projection> updateProjection(@PathVariable Long id, @RequestBody Projection projection) {
         Projection updatedProjection = cinemaService.updateProjection(id, projection);
@@ -94,6 +96,7 @@ public class CinemaController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @DeleteMapping("/projections/{id}")
     public ResponseEntity<Void> deleteProjection(@PathVariable Long id) {
         boolean deleted = cinemaService.deleteProjection(id);
@@ -221,6 +224,7 @@ public class CinemaController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/reservations")
     public List<Reservation> getAllReservations() {
         return cinemaService.getAllReservations();
@@ -257,10 +261,6 @@ public class CinemaController {
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate reservationDate) {
         return cinemaService.getReservationsByDate(reservationDate);
     }
-
-
-
-
 
 
 }
