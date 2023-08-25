@@ -36,4 +36,5 @@ public class CinemaControllerTest {
                 .andExpect(jsonPath("$[1].nom").value("Valérie"));
 
     }
+
 }
