@@ -1,0 +1,545 @@
+openapi: 3.0.3
+info:
+  title: Onboarding API
+  version: "1.2"
+servers:
+  - url: http://localhost:8080
+paths:
+  /Clients:
+    get:
+      tags:
+        - Clients
+      summary: Get all clients
+      responses:
+        "200":
+          description: Results
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Clients'
+    post:
+      tags:
+        - Clients
+      summary: Crée un nouveau client
+      requestBody:
+        description: Nouveau client à créer
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Clients'
+      responses:
+        '201':
+          description: Création réussie
+        '500':
+          description: Internal Server Error
+  /clients/{id}:
+    get:
+      tags:
+        - Clients
+      summary: Get a client by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                id: 1
+                nom: "Valérie"
+                prenom: "Genni"
+                email: "gpurvey1@businessinsider.com"
+    put:
+      tags:
+        - Clients
+      summary: Met à jour un client existant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Données mises à jour du client
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Clients'
+      responses:
+        '200':
+          description: Mise à jour réussie
+        '404':
+          description: Client non trouvé
+        '500':
+          description: Internal Server Error
+  /projections:
+    get:
+      tags:
+        - Projection
+      summary: Get all projections
+      responses:
+        "200":
+          description: Results
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Projection'
+    post:
+      tags:
+        - Projection
+      summary: Crée une nouvelle projection
+      requestBody:
+        description: Nouvelle projection à créer
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Projection'
+      responses:
+        '201':
+          description: Création réussie
+        '500':
+          description: Internal Server Error
+  /projections/{id}:
+    get:
+      tags:
+        - Projection
+      summary: Get a projection by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+    put:
+      tags:
+        - Projection
+      summary: Met à jour une projection existante
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Données mises à jour de la projection
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Projection'
+      responses:
+        '200':
+          description: Mise à jour réussie
+        '404':
+          description: Projection non trouvée
+        '500':
+          description: Internal Server Error
+
+    delete:
+      tags:
+        - Projection
+      summary: Supprime une projection
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Suppression réussie
+        '404':
+          description: Projection non trouvée
+        '500':
+          description: Internal Server Error
+
+  /salles:
+    get:
+      tags:
+        - Salles
+      summary: Get all salles
+      responses:
+        "200":
+          description: Results
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Salle'
+    post:
+      tags:
+        - Salles
+      summary: Crée une nouvelle salle
+      requestBody:
+        description: Nouvelle salle à créer
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Salle'
+      responses:
+        '201':
+          description: Création réussie
+        '500':
+          description: Internal Server Error
+
+  /salles/{id}:
+    get:
+      tags:
+        - Salles
+      summary: Get a salle by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+    put:
+      tags:
+        - Salles
+      summary: Met à jour une salle existante
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Données mises à jour de la salle
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Salle'
+      responses:
+        '200':
+          description: Mise à jour réussie
+        '404':
+          description: Salle non trouvée
+        '500':
+          description: Internal Server Error
+    post:
+      tags:
+        - Salles
+      summary: Crée une nouvelle salle
+      requestBody:
+        description: Nouvelle salle à créer
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Salle'
+      responses:
+        '201':
+          description: Création réussie
+        '500':
+          description: Internal Server Error
+
+
+    delete:
+      tags:
+        - Salles
+      summary: Supprime une salle
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Suppression réussie
+        '404':
+          description: Salle non trouvée
+        '500':
+          description: Internal Server Error
+  /films:
+    get:
+      tags:
+        - Film
+      summary: Get all films
+      responses:
+        "200":
+          description: Results
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Film'
+    post:
+      tags:
+        - Film
+      summary: Crée un nouveau film
+      requestBody:
+        description: Nouveau film à créer
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Film'
+      responses:
+        '201':
+          description: Création réussie
+        '500':
+          description: Internal Server Error
+
+  /films/{id}:
+    get:
+      tags:
+        - Film
+      summary: Get a film by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+
+    put:
+      tags:
+        - Film
+      summary: Met à jour un film existant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Données mises à jour du film
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Film'
+      responses:
+        '200':
+          description: Mise à jour réussie
+        '404':
+          description: Film non trouvé
+        '500':
+          description: Internal Server Error
+
+  /upcoming:
+    get:
+      tags:
+        - Projections
+      summary: Get upcoming projections by date and time
+      parameters:
+        - name: dateTime
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      tags:
+        - Film
+      summary: Supprime un film
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Suppression réussie
+        '404':
+          description: Film non trouvé
+        '500':
+          description: Internal Server Error
+          
+  /reservations:
+    get:
+      tags:
+        - Reservation
+      summary: Get all reservations
+      responses:
+        "200":
+          description: Results
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Reservations'
+
+  /reservations/{id}:
+    delete:
+      tags:
+        - Reservation
+      summary: Delete a reservation by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+      # ... (add schema for response)
+  /salles/search:
+    get:
+      tags:
+        - Reservation
+      summary: Get salles by minimum capacite
+      parameters:
+        - name: capaciteMin
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+  /clients/{id}/reservations:
+    get:
+      tags:
+        - Reservation
+      summary: Get reservations of a client by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+      # ... (add schema for response)
+  /reservations/date:
+    get:
+      tags:
+        - Reservation
+      summary: Get reservations by specific date
+      parameters:
+        - name: reservationDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Successful response
+        '500' :
+          description: Internal server Error
+
+
+components:
+  schemas:
+    Clients:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+          nom:
+            type: string
+            example: Lucrèce
+          prenom:
+            type: string
+            example: Mufinella
+          email:
+            type: string
+            example: melis0@google.cn
+
+
+    Projection:
+      type: object
+      properties:
+        id:
+          type: integer
+          example:  1
+        salle:
+          $ref: '#/components/schemas/Salle'
+        film:
+          $ref: '#/components/schemas/Film'
+        dateHeure:
+          type: string
+          format: date-time
+
+    Salle:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nom:
+          type: string
+          example: phasellus
+        capacite:
+          type: integer
+          example: 338
+        projections:
+            type: integer
+            example: 1
+
+
+    Film:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        titre:
+          type: string
+          example: knowledge base
+        realisateur:
+          type: string
+          example: Tyne Howsin
+        duree:
+          type: integer
+          example: 3
+        genre:
+          type: string
+          example: nisi
+        anneeSortie:
+          type: integer
+          example: 2020
+
+    Reservations:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+          client:
+            type: integer
+            example: 1
+          projection:
+            type: integer
+            example: 1
+          reservationDate:
+            type: string
+            format: date
+
+

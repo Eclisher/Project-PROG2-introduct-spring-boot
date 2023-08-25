@@ -1,9 +1,10 @@
 -- Création de la table "salle"
 CREATE TABLE salle
 (
-    id       SERIAL PRIMARY KEY,
-    nom      VARCHAR(100) NOT NULL,
-    capacite int          NOT NULL
+    id            SERIAL PRIMARY KEY,
+    nom           VARCHAR(100) NOT NULL,
+    id_projection int references projection (id),
+    capacite      int   NOT NULL
 );
 
 -- Création de la table "film"
@@ -14,15 +15,15 @@ CREATE TABLE film
     realisateur  VARCHAR(100),
     duree        int,
     genre        VARCHAR(100),
-    annee_sortie date         not null
+    annee_sortie int          not null
 );
 
 -- Création de la table "projection"
 CREATE TABLE projection
 (
     id         SERIAL PRIMARY KEY,
-    id_salle   int REFERENCES salle (id),
-    id_film    int REFERENCES film (id),
+    id_salle   int REFERENCES salle (id) on delete cascade,
+    id_film    int REFERENCES film (id) on delete cascade,
     date_heure timestamp NOT NULL
 );
 
@@ -36,9 +37,10 @@ CREATE TABLE client
 );
 
 --creation table reservation
-CREATE TABLE reservation (
-                             id SERIAL PRIMARY KEY,
-                             id_client INT REFERENCES client(id),
-                             id_projection INT REFERENCES projection(id),
-                             reservation_date date
+CREATE TABLE reservation
+(
+    id               SERIAL PRIMARY KEY,
+    id_client        INT REFERENCES client (id) on delete cascade,
+    id_projection    INT REFERENCES projection (id) on delete cascade,
+    reservation_date date
 );
