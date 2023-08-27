@@ -6,8 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
-
+@AllArgsConstructor
 public class Client {
 
     private Long id;
@@ -15,11 +14,6 @@ public class Client {
     private String prenom;
     private String email;
 
-    public Client(Long id, String nom, String prenom, String email) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.email = email;
-    }
+
 }
 
