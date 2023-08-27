@@ -1,3 +1,4 @@
+![Texte alternatif](https://github.com/Eclisher/Project-PROG2-introduct-spring-boot/blob/main/new%20MCD.png)
 # Project-PROG2-introduct-spring-boot
 
 This repository contains the final project for the Java programming course (PROG2) of the 2022-2023 academic year. The project focuses on creating RESTful APIs using Spring Boot and the Spring framework, implementing CRUD operations and adhering to the Controller-Service-Repository design pattern.
