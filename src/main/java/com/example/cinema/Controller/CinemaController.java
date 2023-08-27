@@ -2,6 +2,8 @@ package com.example.cinema.Controller;
 
 import com.example.cinema.Model.*;
 import com.example.cinema.Service.CinemaService;
+import jakarta.validation.Valid;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +14,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
+@ComponentScan
 public class CinemaController {
     @GetMapping("")
     public String Bienvenu() {
-        return "Votre Serveur est bien démmarrer";
+        return "Votre serveur est bien été demarrer";
     }
 
     @GetMapping("/ping")
@@ -41,8 +44,9 @@ public class CinemaController {
         return cinemaService.getClientById(id);
     }
 
-    @PostMapping("/clients") // Assurez-vous que le chemin correspond à votre requête POST
-    public ResponseEntity<Client> createClient(@RequestBody Client client) {
+
+    @PostMapping("/clients")
+    public ResponseEntity<Client> createClient(@Valid @RequestBody Client client){
         Client createdClient = cinemaService.createClient(client);
         if (createdClient != null) {
             return new ResponseEntity<>(createdClient, HttpStatus.CREATED);
@@ -51,11 +55,18 @@ public class CinemaController {
         }
     }
 
-    @PutMapping("/clients/{id}")
-    public Client updateClient(@PathVariable Long id, @RequestBody Client client) {
-        return cinemaService.updateClient(id, client);
-    }
+    @PutMapping("clients/{id}")
+    public ResponseEntity<Client> updateClient(
+            @PathVariable Long id,
+            @Valid @RequestBody Client client) {
 
+        Client updatedClient = cinemaService.updateClient(id, client);
+        if (updatedClient != null) {
+            return new ResponseEntity<>(updatedClient, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
     @DeleteMapping("/clients/{id}")
     public boolean deleteClient(@PathVariable Long id) {
         return cinemaService.deleteClient(id);
@@ -86,6 +97,7 @@ public class CinemaController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @PutMapping("/projections/{id}")
     public ResponseEntity<Projection> updateProjection(@PathVariable Long id, @RequestBody Projection projection) {
@@ -200,15 +212,6 @@ public class CinemaController {
         }
     }
 
-    //Bonnus
-    // Methode de chercher un projection  à la date ...
-    // en entrant par exemple http://localhost:8080/upcoming?dateTime=2022-10-10%2011:59:50
-    @GetMapping("/upcoming")
-    public List<Projection> getUpcomingProjectionsByDateTime(
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime dateTime) {
-        return cinemaService.getProjectionsByDateTime(dateTime);
-    }
-
     //Methode de gestion du réservation
 
 
@@ -239,6 +242,16 @@ public class CinemaController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    //Bonnus
+    // Methode de chercher un projection  à la date ...
+        // en entrant par exemple http://localhost:8080/upcoming?dateTime=2022-10-10%2011:59:50
+    @GetMapping("/upcoming")
+    public List<Projection> getUpcomingProjectionsByDateTime(
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime dateTime) {
+        return cinemaService.getProjectionsByDateTime(dateTime);
+    }
+
 
     // Méthode de recherche de salles par capacité
     //http://localhost:8080/salles/search?capaciteMin=900
