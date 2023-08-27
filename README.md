@@ -13,7 +13,7 @@ My theme is cinema management
 
 ## Presentation
 
-This project implements a [entities] management system using RESTful APIs. CRUD (Create, Read, Update, Delete) operations are exposed via REST endpoints.
+This project implements a [model] management system using RESTful APIs. CRUD (Create, Read, Update, Delete) operations are exposed via REST endpoints.
 
 ## Technologies used
 
@@ -56,11 +56,11 @@ then insert all datamocks into **salle.sql**
 ## Endpoints
 CRUD endpoints are defined in REST controllers. Here are a few examples:
 
-- `GET /entities`: Retrieves the list of entities.-
-- `GET /entities/{id}`: Retrieves the details of a specific entity.
-- `POST /entities`: Creates a new entity.
-- ` PUT /entities/{id}`: Updates the details of an existing entity.
-- `DELETE /entities/{id}`: Deletes an entity.
+- `GET /model`: Retrieves the list of entities.-
+- `GET /model/{id}`: Retrieves the details of a specific entity.
+- `POST /model`: Creates a new entity.
+- ` PUT /model/{id}`: Updates the details of an existing entity.
+- `DELETE /model/{id}`: Deletes an entity.
 
 1. Clone this Git repository on your local machine.
 2. Configure the PostgreSQL database and update the connection information in `src/main/resources/application.properties`.
